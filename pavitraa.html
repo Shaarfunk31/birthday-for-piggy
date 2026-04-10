@@ -1,0 +1,1555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Happy Birthday Piggy Ma 🐷💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --pink: #f472b6;
+    --deep-pink: #db2777;
+    --rose: #fda4af;
+    --cream: #fff7f0;
+    --gold: #f59e0b;
+    --soft: #fce7f3;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Crimson Pro', serif;
+    background: #0d0008;
+    color: #fff;
+    overflow-x: hidden;
+  }
+
+  /* ===== PARTICLES ===== */
+  #particles {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* ===== INTRO SCREEN ===== */
+  #introScreen {
+    position: fixed;
+    inset: 0;
+    background: #000;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .intro-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 90%;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .intro-main {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 8vw, 5rem);
+    font-weight: 700;
+    color: #fff;
+    line-height: 1.2;
+    letter-spacing: 0.02em;
+  }
+
+  .intro-main .hi { color: var(--pink); }
+  .intro-main .name { color: #ffb3d1; }
+
+  .intro-sub {
+    font-family: 'Crimson Pro', serif;
+    font-size: clamp(1.1rem, 3.5vw, 1.8rem);
+    color: rgba(255,255,255,0.85);
+    font-style: italic;
+    margin-top: 0.5rem;
+    line-height: 1.5;
+  }
+
+  .intro-count {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(4rem, 20vw, 10rem);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .intro-count.three { color: #ff2244; }
+  .intro-count.two   { color: #22c55e; }
+  .intro-count.one   { color: var(--pink); }
+
+  .intro-cursor {
+    display: inline-block;
+    width: 3px;
+    height: 1em;
+    background: var(--pink);
+    margin-left: 4px;
+    vertical-align: middle;
+    animation: blink 0.7s infinite;
+  }
+
+  /* ===== PAGE 1 ===== */
+  #page1 {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    z-index: 1;
+    padding: 2rem;
+  }
+
+  .terminal-box {
+    background: rgba(0,0,0,0.7);
+    border: 1px solid var(--pink);
+    border-radius: 12px;
+    padding: 2.5rem 3rem;
+    max-width: 520px;
+    width: 100%;
+    box-shadow: 0 0 40px rgba(244,114,182,0.3), inset 0 0 40px rgba(0,0,0,0.5);
+    animation: fadeInUp 1s ease forwards;
+    position: relative;
+  }
+
+  .terminal-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .dot {
+    width: 12px; height: 12px;
+    border-radius: 50%;
+  }
+  .dot.red { background: #ff5f57; }
+  .dot.yellow { background: #febc2e; }
+  .dot.green { background: #28c840; }
+
+  .terminal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.4rem, 4vw, 2rem);
+    font-weight: 700;
+    color: var(--pink);
+    margin-bottom: 0.5rem;
+    text-align: center;
+  }
+
+  .terminal-sub {
+    font-size: 1rem;
+    color: rgba(255,255,255,0.6);
+    text-align: center;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
+  .question-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: #fff;
+    text-align: center;
+    margin-bottom: 1.8rem;
+    line-height: 1.5;
+  }
+
+  .choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+  }
+
+  .choice-btn {
+    background: transparent;
+    border: 1px solid rgba(244,114,182,0.5);
+    color: #fff;
+    padding: 14px 10px;
+    border-radius: 8px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .choice-btn::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(244,114,182,0.2), transparent);
+    transition: left 0.4s ease;
+  }
+
+  .choice-btn:hover::before { left: 100%; }
+  .choice-btn:hover {
+    border-color: var(--pink);
+    color: var(--pink);
+    box-shadow: 0 0 20px rgba(244,114,182,0.3);
+    transform: translateY(-2px);
+  }
+
+  .choice-btn.wrong {
+    animation: shake 0.5s ease;
+    border-color: #ef4444;
+    color: #ef4444;
+  }
+
+  .choice-btn.correct {
+    border-color: #22c55e;
+    color: #22c55e;
+    background: rgba(34,197,94,0.1);
+  }
+
+  /* Pig Animation Overlay */
+  #pigOverlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    z-index: 9998;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  /* ===== PAGE 2 ===== */
+  #page2 {
+    display: none;
+    position: relative;
+    z-index: 1;
+  }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 3rem 2rem;
+    text-align: center;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 50%, rgba(244,114,182,0.15) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .birthday-badge {
+    font-size: 0.85rem;
+    letter-spacing: 0.3em;
+    color: var(--pink);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s 0.3s ease forwards;
+  }
+
+  .photo-frame {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    border: 3px solid var(--pink);
+    overflow: hidden;
+    margin: 1.5rem auto;
+    box-shadow: 0 0 0 8px rgba(244,114,182,0.15), 0 0 40px rgba(244,114,182,0.4);
+    opacity: 0;
+    animation: fadeInUp 0.8s 0.5s ease forwards;
+    position: relative;
+  }
+
+  .photo-placeholder {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #831843, #be185d);
+    font-size: 4rem;
+  }
+
+  .big-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.5rem, 8vw, 5rem);
+    font-weight: 700;
+    line-height: 1.1;
+    background: linear-gradient(135deg, #fff 0%, var(--rose) 50%, var(--pink) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+    animation: fadeInUp 0.8s 0.7s ease forwards;
+    margin-bottom: 0.5rem;
+  }
+
+  .subtitle-name {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(1.3rem, 3vw, 2rem);
+    color: var(--rose);
+    opacity: 0;
+    animation: fadeInUp 0.8s 0.9s ease forwards;
+    margin-bottom: 2rem;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255,255,255,0.4);
+    font-size: 0.85rem;
+    animation: bounce 2s infinite;
+  }
+
+  .scroll-arrow {
+    width: 24px;
+    height: 24px;
+    border-right: 2px solid rgba(255,255,255,0.4);
+    border-bottom: 2px solid rgba(255,255,255,0.4);
+    transform: rotate(45deg);
+  }
+
+  /* Letter Section */
+  .letter-section {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+  }
+
+  .letter-card {
+    max-width: 680px;
+    width: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(244,114,182,0.2);
+    border-radius: 20px;
+    padding: 3rem;
+    position: relative;
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .letter-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .letter-card::before {
+    content: '\201C';
+    font-family: 'Playfair Display', serif;
+    font-size: 8rem;
+    color: rgba(244,114,182,0.15);
+    position: absolute;
+    top: -1rem;
+    left: 1.5rem;
+    line-height: 1;
+  }
+
+  .letter-date {
+    font-size: 0.85rem;
+    color: var(--pink);
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .letter-body {
+    font-size: 1.15rem;
+    line-height: 2;
+    color: rgba(255,255,255,0.85);
+    font-style: italic;
+  }
+
+  .letter-sign {
+    margin-top: 2rem;
+    text-align: right;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--pink);
+  }
+
+  /* Gift Section */
+  .gift-section {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+
+  .gift-section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    color: var(--rose);
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+
+  .gift-section-title.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .gift-sub {
+    color: rgba(255,255,255,0.5);
+    font-size: 1rem;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transition: opacity 0.8s 0.2s ease;
+  }
+
+  .gift-sub.visible { opacity: 1; }
+
+  .gift-wrap {
+    position: relative;
+    cursor: pointer;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.8s 0.3s ease, transform 0.8s 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  .gift-wrap.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .gift-box {
+    width: 180px;
+    height: 160px;
+    background: linear-gradient(135deg, #be185d, #9d174d);
+    border-radius: 12px;
+    margin: 0 auto;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(190,24,93,0.5);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+
+  .gift-box:hover {
+    transform: translateY(-8px) rotate(-2deg);
+    box-shadow: 0 30px 80px rgba(190,24,93,0.7);
+  }
+
+  .gift-lid {
+    width: 200px;
+    height: 50px;
+    background: linear-gradient(135deg, #db2777, #be185d);
+    border-radius: 10px;
+    position: absolute;
+    top: -25px;
+    left: -10px;
+    box-shadow: 0 -5px 20px rgba(219,39,119,0.4);
+    transition: transform 0.5s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  .gift-ribbon-v {
+    position: absolute;
+    width: 20px;
+    height: 100%;
+    background: rgba(255,255,255,0.25);
+    left: 50%;
+    transform: translateX(-50%);
+    border-radius: 4px;
+  }
+
+  .gift-ribbon-h {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    background: rgba(255,255,255,0.25);
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 4px;
+  }
+
+  .gift-lid .ribbon-h {
+    position: absolute;
+    width: 100%;
+    height: 20px;
+    background: rgba(255,255,255,0.25);
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 4px;
+  }
+
+  .gift-bow {
+    position: absolute;
+    top: -20px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 2.5rem;
+    filter: drop-shadow(0 0 10px rgba(255,200,200,0.8));
+  }
+
+  .gift-click-hint {
+    margin-top: 1.5rem;
+    color: rgba(255,255,255,0.5);
+    font-size: 0.95rem;
+    animation: pulse 2s infinite;
+  }
+
+  /* Gift Question Modal */
+  #giftModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    z-index: 999;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+  }
+
+  #giftModal.show { display: flex; }
+
+  .gift-modal-box {
+    background: #1a0015;
+    border: 1px solid var(--pink);
+    border-radius: 20px;
+    padding: 2.5rem;
+    max-width: 440px;
+    width: 100%;
+    text-align: center;
+    animation: popIn 0.5s cubic-bezier(0.34,1.56,0.64,1);
+    box-shadow: 0 0 60px rgba(244,114,182,0.3);
+  }
+
+  .modal-icon { font-size: 2.5rem; margin-bottom: 1rem; }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--pink);
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-q {
+    color: rgba(255,255,255,0.8);
+    font-size: 1.05rem;
+    margin-bottom: 1.8rem;
+    line-height: 1.6;
+  }
+
+  .modal-choices {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin-bottom: 1rem;
+  }
+
+  .modal-btn {
+    background: transparent;
+    border: 1px solid rgba(244,114,182,0.4);
+    color: #fff;
+    padding: 12px 8px;
+    border-radius: 8px;
+    font-family: 'Crimson Pro', serif;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .modal-btn:hover {
+    border-color: var(--pink);
+    color: var(--pink);
+    background: rgba(244,114,182,0.1);
+  }
+
+  /* Celebration / Video Section */
+  #celebrationSection {
+    display: none;
+    text-align: center;
+    padding: 3rem 2rem;
+    position: relative;
+  }
+
+  #celebrationSection.show { display: block; }
+
+  .confetti-canvas {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 998;
+  }
+
+  .video-reveal {
+    max-width: 640px;
+    margin: 0 auto;
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.34,1.56,0.64,1);
+  }
+
+  .video-reveal.show {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  .video-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    background: linear-gradient(135deg, #fff, var(--pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.5rem;
+  }
+
+  .video-frame {
+    width: 100%;
+    aspect-ratio: 16/9;
+    border-radius: 16px;
+    overflow: hidden;
+    border: 2px solid var(--pink);
+    box-shadow: 0 0 60px rgba(244,114,182,0.4);
+    background: #1a0010;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+
+  .video-placeholder-msg {
+    color: rgba(255,255,255,0.5);
+    font-size: 1rem;
+    text-align: center;
+    padding: 2rem;
+    line-height: 1.8;
+  }
+
+  .final-msg {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    color: var(--rose);
+    font-style: italic;
+    margin-top: 2rem;
+    opacity: 0;
+    animation: fadeInUp 0.8s 0.5s ease forwards;
+  }
+
+  /* Music player */
+  .music-bar {
+    position: fixed;
+    bottom: 1.5rem;
+    right: 1.5rem;
+    background: rgba(0,0,0,0.7);
+    border: 1px solid rgba(244,114,182,0.4);
+    border-radius: 50px;
+    padding: 10px 18px;
+    display: none;
+    align-items: center;
+    gap: 10px;
+    z-index: 100;
+    backdrop-filter: blur(10px);
+    cursor: pointer;
+    transition: border-color 0.3s;
+  }
+
+  .music-bar:hover { border-color: var(--pink); }
+  .music-bar.show { display: flex; }
+
+  .music-note {
+    font-size: 1rem;
+    animation: spin 3s linear infinite;
+  }
+
+  .music-label {
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.6);
+  }
+
+  /* ===== KEYFRAMES ===== */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes shake {
+    0%,100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-5px); }
+    80% { transform: translateX(5px); }
+  }
+
+  @keyframes popIn {
+    from { transform: scale(0.5); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes bounce {
+    0%,100% { transform: translateX(-50%) translateY(0); }
+    50% { transform: translateX(-50%) translateY(-10px); }
+  }
+
+  @keyframes pulse {
+    0%,100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  @keyframes lidFly {
+    0% { transform: translateY(0) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(-200px) rotate(-30deg); opacity: 0; }
+  }
+
+  @keyframes p1Exit {
+    to { opacity: 0; transform: scale(0.95); pointer-events: none; }
+  }
+
+  @keyframes p2Enter {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes blink {
+    0%,100% { opacity: 1; }
+    50% { opacity: 0; }
+  }
+
+  @keyframes introReveal { 
+    from { opacity: 0; transform: translate(-50%, -56%); } 
+    to { opacity: 1; transform: translate(-50%, -50%); } 
+  }
+  
+  @keyframes introFadeOut { 
+    from { opacity: 1; transform: translate(-50%, -50%) scale(1); } 
+    to { opacity: 0; transform: translate(-50%, -50%) scale(1.06); } 
+  }
+  
+  @keyframes countPop { 
+    0% { opacity: 0; transform: translate(-50%,-50%) scale(0.3); } 
+    30% { opacity: 1; transform: translate(-50%,-50%) scale(1.15); } 
+    55% { transform: translate(-50%,-50%) scale(0.95); } 
+    70% { opacity: 1; transform: translate(-50%,-50%) scale(1); } 
+    100% { opacity: 0; transform: translate(-50%,-50%) scale(0.6); } 
+  }
+  
+  @keyframes introExit { 
+    0% { opacity: 1; } 
+    100% { opacity: 0; transform: scale(1.05); } 
+  }
+  
+  @keyframes hintPulse { 
+    0%,100% { opacity: 0.3; } 
+    50% { opacity: 0.9; } 
+  }
+
+  @keyframes pigPopIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    60% { transform: scale(1.15); opacity: 1; }
+    100% { transform: scale(1); opacity: 1; }
+  }
+
+  @keyframes pigBounce {
+    0%,100% { transform: translateY(0) scale(1); }
+    25% { transform: translateY(-18px) scale(1.05); }
+    50% { transform: translateY(0) scale(0.97); }
+    75% { transform: translateY(-8px) scale(1.02); }
+  }
+
+  @keyframes pigShake {
+    0%,100% { transform: rotate(0deg) scale(1); }
+    15% { transform: rotate(-8deg) scale(1.02); }
+    35% { transform: rotate(8deg) scale(1.02); }
+    55% { transform: rotate(-5deg); }
+    75% { transform: rotate(5deg); }
+  }
+
+  @keyframes sparkleFloat {
+    0%,100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50% { transform: scale(1.3) rotate(20deg); opacity: 0.7; }
+  }
+
+  #pigHappy { animation: pigPopIn 0.5s ease forwards; }
+  #pigSad { animation: pigPopIn 0.5s ease forwards; }
+  #pigHappy.bouncing { animation: pigBounce 0.7s ease infinite; }
+  #pigSad.shaking { animation: pigShake 0.6s ease infinite; }
+  #sparkleGroup text { animation: sparkleFloat 1.2s ease infinite; }
+  #sparkleGroup text:nth-child(2) { animation-delay: 0.3s; }
+  #sparkleGroup text:nth-child(3) { animation-delay: 0.6s; }
+  #sparkleGroup text:nth-child(4) { animation-delay: 0.9s; }
+
+  @media (max-width: 480px) {
+    .terminal-box { padding: 2rem 1.5rem; }
+    .letter-card { padding: 2rem 1.5rem; }
+    .gift-modal-box { padding: 2rem 1.5rem; }
+  }
+    /* ===== PHOTO GALLERY SECTION ===== */
+  .photo-gallery-section {
+    padding: 5rem 1.5rem 3rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pg-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  .pg-header.visible { opacity: 1; transform: translateY(0); }
+
+  .pg-tag {
+    font-size: 0.8rem;
+    letter-spacing: 0.3em;
+    color: var(--pink);
+    text-transform: uppercase;
+    margin-bottom: 0.8rem;
+  }
+
+  .pg-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: #fff;
+    line-height: 1.2;
+  }
+  .pg-title em { color: var(--pink); font-style: italic; }
+
+  .pg-strip {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  .pg-card {
+    border-radius: 20px;
+    overflow: hidden;
+    border: 1px solid rgba(244,114,182,0.25);
+    background: rgba(0,0,0,0.4);
+    opacity: 0;
+    transform: scale(0.92) translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.34,1.3,0.64,1);
+  }
+
+  .pg-card.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+
+  .pg-card:nth-child(1) { transition-delay: 0.0s; }
+  .pg-card:nth-child(2) { transition-delay: 0.15s; }
+  .pg-card:nth-child(3) { transition-delay: 0.3s; }
+  .pg-card:nth-child(4) { transition-delay: 0.45s; }
+
+  .pg-card:hover { border-color: var(--pink); transform: scale(1.03) translateY(-4px) !important; box-shadow: 0 20px 50px rgba(244,114,182,0.3); }
+
+  .pg-img-wrap {
+    position: relative;
+    aspect-ratio: 3/4;
+    overflow: hidden;
+  }
+
+  .pg-img-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: top center;
+    transition: transform 0.5s ease;
+    display: block;
+  }
+
+  .pg-card:hover .pg-img-wrap img { transform: scale(1.07); }
+
+  .pg-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(219,39,119,0.8) 0%, transparent 60%);
+    display: flex;
+    align-items: flex-end;
+    padding: 1rem;
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .pg-card:hover .pg-overlay { opacity: 1; }
+
+  .pg-overlay span {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: #fff;
+    line-height: 1.4;
+  }
+
+  .pg-caption {
+    padding: 0.8rem 1rem;
+    font-family: 'Crimson Pro', serif;
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.65);
+    text-align: center;
+    font-style: italic;
+    border-top: 1px solid rgba(244,114,182,0.15);
+  }
+
+  /* ===== BIRTHDAY EXTRAS ===== */
+  .bday-extras {
+    padding: 2rem 1.5rem 4rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .balloons-row {
+    display: flex;
+    justify-content: center;
+    gap: clamp(1rem, 4vw, 3rem);
+    margin-bottom: 2rem;
+    opacity: 0;
+    transition: opacity 0.8s ease;
+  }
+  .balloons-row.visible { opacity: 1; }
+
+  .balloon {
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    display: inline-block;
+    animation: balloonFloat 3s ease-in-out infinite;
+  }
+  .balloon.b1 { animation-delay: 0s; }
+  .balloon.b2 { animation-delay: 0.4s; }
+  .balloon.b3 { animation-delay: 0.8s; }
+  .balloon.b4 { animation-delay: 1.2s; }
+  .balloon.b5 { animation-delay: 1.6s; }
+
+  @keyframes balloonFloat {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-20px) rotate(3deg); }
+  }
+
+  .bday-wish-card {
+    max-width: 560px;
+    margin: 0 auto;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(244,114,182,0.3);
+    border-radius: 24px;
+    padding: 2.5rem 2rem;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s 0.3s ease, transform 0.8s 0.3s ease;
+  }
+  .bday-wish-card.visible { opacity: 1; transform: translateY(0); }
+
+  .bday-cake {
+    font-size: 4rem;
+    margin-bottom: 1rem;
+    display: block;
+    animation: cakePop 1s 0.5s cubic-bezier(0.34,1.56,0.64,1) both;
+  }
+  @keyframes cakePop {
+    from { transform: scale(0); opacity: 0; }
+    to   { transform: scale(1); opacity: 1; }
+  }
+
+  .bday-wish-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    color: #fff;
+    line-height: 1.2;
+    margin-bottom: 1rem;
+  }
+  .bday-wish-title span { color: var(--pink); }
+
+  .bday-wish-msg {
+    font-family: 'Crimson Pro', serif;
+    font-size: 1.1rem;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.8;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+
+  .bday-stars { display: flex; justify-content: center; gap: 10px; }
+  .bstar { font-size: 1.5rem; animation: starTwinkle 2s infinite; }
+  .bstar.s1 { animation-delay: 0s; }
+  .bstar.s2 { animation-delay: 0.3s; }
+  .bstar.s3 { animation-delay: 0.6s; }
+  .bstar.s4 { animation-delay: 0.9s; }
+  .bstar.s5 { animation-delay: 1.2s; }
+  @keyframes starTwinkle {
+    0%,100% { transform: scale(1) rotate(0deg); opacity: 1; }
+    50%      { transform: scale(1.3) rotate(20deg); opacity: 0.6; }
+  }
+
+  @media (max-width: 500px) {
+    .pg-strip { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+    .pg-caption { font-size: 0.8rem; padding: 0.5rem; }
+  }
+  .pg-img-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  background: #333; /* Shows background if image missing */
+}
+</style>
+</head>
+<body>
+
+<!-- Floating hearts bg -->
+<canvas id="particles"></canvas>
+
+<!-- ==================== INTRO SCREEN ==================== -->
+<div id="introScreen">
+  <div class="intro-text" id="intro1"><div class="intro-main"><span class="hi">Hi</span> <span class="name">Piggy</span> 🐷<span class="intro-cursor"></span></div></div>
+  <div class="intro-text" id="intro2"><div class="intro-main">Today is</div><div class="intro-main" style="color:var(--pink);">your day, right? 🎂</div></div>
+  <div class="intro-text" id="intro3"><div class="intro-sub">I knew you would open this...</div><div class="intro-main" style="font-size:clamp(1.5rem,5vw,3rem); margin-top:0.5rem;">just for you 💕</div></div>
+  <div class="intro-text" id="intro4"><div class="intro-sub">This is my</div><div class="intro-main" style="color:var(--pink);">birthday gift</div><div class="intro-sub">hope you like it 🎁</div></div>
+  <div class="intro-text" id="intro5"><div class="intro-main" style="font-size:clamp(1.8rem,5vw,3.5rem);">Let's count... 🎉</div></div>
+  <div class="intro-text" id="intro6"><div class="intro-count three">3</div></div>
+  <div class="intro-text" id="intro7"><div class="intro-count two">2</div></div>
+  <div class="intro-text" id="intro8"><div class="intro-count one">1</div></div>
+</div>
+
+<!-- ==================== PAGE 1 ==================== -->
+<div id="page1">
+  <div class="terminal-box">
+    <div class="terminal-bar"><div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div></div>
+    <div class="terminal-title">🔐 Secret Access</div>
+    <div class="terminal-sub">Only my special person can enter...</div>
+    <div class="question-text">What do I call you? 🤔</div>
+    <div class="choices">
+      <button class="choice-btn" onclick="checkAnswer(this, 'Amu')">Amu</button>
+      <button class="choice-btn" onclick="checkAnswer(this, 'Piggy')">Piggy 🐷</button>
+      <button class="choice-btn" onclick="checkAnswer(this, 'Chellow')">Chellow</button>
+      <button class="choice-btn" onclick="checkAnswer(this, 'Baby')">Baby</button>
+    </div>
+  </div>
+</div>
+
+<!-- Pig Animation Overlay -->
+<div id="pigOverlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.95); z-index:9998; align-items:center; justify-content:center; flex-direction:column;">
+  <div id="pigBox" style="text-align:center;">
+    <!-- HAPPY PIG SVG -->
+    <svg id="pigHappy" width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+      <ellipse cx="42" cy="68" rx="22" ry="20" fill="#f9a8c9"/>
+      <ellipse cx="138" cy="68" rx="22" ry="20" fill="#f9a8c9"/>
+      <ellipse cx="42" cy="68" rx="13" ry="12" fill="#f472b6"/>
+      <ellipse cx="138" cy="68" rx="13" ry="12" fill="#f472b6"/>
+      <ellipse cx="90" cy="98" rx="60" ry="58" fill="#fda4af"/>
+      <ellipse cx="58" cy="112" rx="14" ry="9" fill="#fb7185" opacity="0.5"/>
+      <ellipse cx="122" cy="112" rx="14" ry="9" fill="#fb7185" opacity="0.5"/>
+      <path d="M68 88 Q74 80 80 88" stroke="#1a0010" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M100 88 Q106 80 112 88" stroke="#1a0010" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="90" cy="112" rx="22" ry="16" fill="#f472b6"/>
+      <ellipse cx="82" cy="112" rx="5.5" ry="5" fill="#be185d"/>
+      <ellipse cx="98" cy="112" rx="5.5" ry="5" fill="#be185d"/>
+      <path d="M68 126 Q90 148 112 126" stroke="#1a0010" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <g id="sparkleGroup">
+        <text x="20" y="50" font-size="18" fill="#fbbf24">✦</text>
+        <text x="142" y="44" font-size="14" fill="#f472b6">✦</text>
+        <text x="152" y="130" font-size="16" fill="#22c55e">✦</text>
+        <text x="10" y="130" font-size="12" fill="#fbbf24">✦</text>
+      </g>
+    </svg>
+    <!-- SAD PIG SVG -->
+    <svg id="pigSad" width="180" height="180" viewBox="0 0 180 180" xmlns="http://www.w3.org/2000/svg" style="display:none;">
+      <ellipse cx="42" cy="74" rx="22" ry="20" fill="#f9a8c9" transform="rotate(15,42,74)"/>
+      <ellipse cx="138" cy="74" rx="22" ry="20" fill="#f9a8c9" transform="rotate(-15,138,74)"/>
+      <ellipse cx="42" cy="74" rx="13" ry="12" fill="#f472b6" transform="rotate(15,42,74)"/>
+      <ellipse cx="138" cy="74" rx="13" ry="12" fill="#f472b6" transform="rotate(-15,138,74)"/>
+      <ellipse cx="90" cy="100" rx="60" ry="58" fill="#fda4af"/>
+      <ellipse cx="64" cy="115" rx="4" ry="6" fill="#93c5fd" opacity="0.9"/>
+      <path d="M64 109 Q60 115 64 121 Q68 115 64 109" fill="#93c5fd"/>
+      <ellipse cx="116" cy="115" rx="4" ry="6" fill="#93c5fd" opacity="0.9"/>
+      <path d="M116 109 Q112 115 116 121 Q120 115 116 109" fill="#93c5fd"/>
+      <path d="M68 92 Q74 100 80 92" stroke="#1a0010" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <path d="M100 92 Q106 100 112 92" stroke="#1a0010" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+      <ellipse cx="90" cy="114" rx="22" ry="16" fill="#f472b6"/>
+      <ellipse cx="82" cy="114" rx="5.5" ry="5" fill="#be185d"/>
+      <ellipse cx="98" cy="114" rx="5.5" ry="5" fill="#be185d"/>
+      <path d="M72 134 Q90 122 108 134" stroke="#1a0010" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+    </svg>
+    <div id="pigMsg" style="font-family:'Playfair Display',serif; font-size:1.5rem; margin-top:1.2rem; color:#fff;"></div>
+    <div id="pigSub" style="font-family:'Crimson Pro',serif; font-size:1rem; color:rgba(255,255,255,0.6); margin-top:0.4rem; font-style:italic;"></div>
+    <button id="pigBtn" onclick="closePigOverlay()" style="display:none; margin-top:1.5rem; background:#ef4444; color:#fff; border:none; padding:10px 28px; border-radius:8px; font-family:'Crimson Pro',serif; font-size:1rem; cursor:pointer; transition:opacity 0.2s;">Try Again 🥺</button>
+  </div>
+</div>
+
+<!-- ==================== PAGE 2 ==================== -->
+<div id="page2">
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="birthday-badge">✨ 11 April · A Special Day ✨</div>
+    <div class="photo-frame"><div class="photo-placeholder">🐷</div></div>
+    <h1 class="big-title">Happy Birthday</h1>
+    <div class="subtitle-name">My Piggy Ma 🐷💕</div>
+    <div class="scroll-hint"><span>scroll down</span><div class="scroll-arrow"></div></div>
+  </section>
+
+  <section class="letter-section">
+    <div class="letter-card" id="letterCard">
+      <div class="letter-date">April 11 · With all my love</div>
+      <div class="letter-body">
+        Dear Pavitra,<br><br>
+        From the moment I met you at Star Tuition, something changed inside me. At first, we were just friends, messaging back and forth, but over time, I felt something so powerful — like a butterfly taking flight. I proposed quickly, but you needed time — time to figure out how a long-distance love could work. For five years, we kept this love going — despite the distance, despite the arguments, despite even the times we broke up — we always returned to each other.<br><br>
+        I still remember the first time we met in person during my college break — holding your hand, feeling that indescribable connection. You became my comfort, my safe place — something I never thought I could feel. But life threw us off course, and for reasons I still don't fully understand, you left. I cried, I begged, but you stayed away.<br><br>
+        Even now, I'm fighting to keep this love alive — not because I can't live without hope, but because you are my everything. No matter what happens, I won't give up on you. I know I wasn't perfect — I had a bad temper, a rough attitude — but I've changed because of you. I just want you to know that if you choose independence, I respect you completely, but if there's even a chance for us, I'm here. I want to make you happy, today and always.
+      </div>
+      <div class="letter-sign">With all my love 🌹</div>
+    </div>
+  </section>
+  
+  <!-- ==================== PHOTO GALLERY ==================== -->
+  <section class="photo-gallery-section" id="photoGallerySection">
+    <div class="pg-header" id="pgHeader">
+      <div class="pg-tag">📸 Our Moments</div>
+      <h2 class="pg-title">Every picture tells<br><em>our story</em></h2>
+    </div>
+
+    <div class="pg-strip" id="pgStrip">
+      <!-- Photo 1 -->
+      <div class="pg-card" id="pgCard1">
+        <div class="pg-img-wrap">
+          <img src="p1.jpeg" alt="Memory 1">
+          <div class="pg-overlay"><span>My beautiful Piggy 🐷</span></div>
+        </div>
+        <div class="pg-caption">She smiled and the world got brighter ✨</div>
+      </div>
+
+      <!-- Photo 2 -->
+      <div class="pg-card" id="pgCard2">
+        <div class="pg-img-wrap">
+          <img src="p2.jpeg" alt="Memory 2">
+          <div class="pg-overlay"><span>Even behind the mask, those eyes 🥺💕</span></div>
+        </div>
+        <div class="pg-caption">Her eyes say everything 💫</div>
+      </div>
+
+      <!-- Photo 3 -->
+      <div class="pg-card" id="pgCard3">
+        <div class="pg-img-wrap">
+          <img src="p3.jpeg" alt="Memory 3">
+          <div class="pg-overlay"><span>Silly & adorable always 🐾💖</span></div>
+        </div>
+        <div class="pg-caption">This is the face I fell for 🐾</div>
+      </div>
+
+      <!-- Photo 4 -->
+      <div class="pg-card" id="pgCard4">
+        <div class="pg-img-wrap">
+          <img src="p4.jpeg" alt="Memory 4">
+          <div class="pg-overlay"><span>My favourite face 🌹</span></div>
+        </div>
+        <div class="pg-caption">Forever my favourite person 🌹</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BIRTHDAY EXTRAS ==================== -->
+  <section class="bday-extras" id="bdayExtras">
+    <div class="balloons-row" id="balloonsRow">
+      <div class="balloon b1">🎈</div>
+      <div class="balloon b2">🎈</div>
+      <div class="balloon b3">🎈</div>
+      <div class="balloon b4">🎈</div>
+      <div class="balloon b5">🎈</div>
+    </div>
+    <div class="bday-wish-card" id="bdayWishCard">
+      <div class="bday-cake">🎂</div>
+      <h2 class="bday-wish-title">Happy Birthday<br><span>Pavitra 🐷</span></h2>
+      <p class="bday-wish-msg">April 11 is the most special day of the year — because it's the day <em>you</em> came into this world. And because of that, my world is a better place. 💕</p>
+      <div class="bday-stars">
+        <span class="bstar s1">⭐</span>
+        <span class="bstar s2">🌟</span>
+        <span class="bstar s3">✨</span>
+        <span class="bstar s4">⭐</span>
+        <span class="bstar s5">🌟</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="gift-section">
+    <h2 class="gift-section-title" id="giftTitle">I have something for you... 🎁</h2>
+    <p class="gift-sub" id="giftSub">Click the present to open it!</p>
+    <div class="gift-wrap" id="giftWrap" onclick="openGiftModal()">
+      <div class="gift-box" id="giftBox">
+        <div class="gift-lid" id="giftLid"><div class="ribbon-h"></div></div>
+        <div class="gift-ribbon-v"></div>
+        <div class="gift-ribbon-h"></div>
+        <div class="gift-bow">🎀</div>
+      </div>
+      <p class="gift-click-hint">Tap to open 🎀</p>
+    </div>
+    <div id="celebrationSection">
+      <canvas class="confetti-canvas" id="confettiCanvas"></canvas>
+      <div class="video-reveal" id="videoReveal">
+        <div class="video-title">🎂 A Message Just For You 🎂</div>
+        <div class="video-frame">
+          <div class="video-placeholder-msg">
+            🎬 Your special video will appear here!<br><br>
+            <small>Replace the placeholder with your YouTube embed link</small>
+          </div>
+        </div>
+        <div class="final-msg">Happy Birthday my Piggy 🐷💕 I love you so much!</div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- Gift Question Modal -->
+<div id="giftModal">
+  <div class="gift-modal-box">
+    <div class="modal-icon">🎁</div>
+    <div class="modal-title">Before you open this...</div>
+    <div class="modal-q">Answer this: How much i love  💕</div>
+    <div class="modal-choices">
+      <button class="modal-btn" onclick="checkGiftAnswer(this, 'Just thinking as my friend')">Just thinking as my friend</button>
+      <button class="modal-btn" onclick="checkGiftAnswer(this, 'your my wife')">your my wife</button>
+      <button class="modal-btn" onclick="checkGiftAnswer(this, 'my girlfriend')">my girlfriend</button>
+      <button class="modal-btn" onclick="checkGiftAnswer(this, 'Your are nothing')">Your are nothing</button>
+    </div>
+  </div>
+</div>
+
+<div class="music-bar" id="musicBar" onclick="toggleMusic()">
+  <span class="music-note" id="musicNote">🎵</span>
+  <span class="music-label" id="musicLabel">♪ Playing for you</span>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="Maryan - Innum Konjam Naeram Video  A. R. Rahman  Dhanush  Super Hit Song - SonyMusicSouthVEVO.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// ===== INTRO SEQUENCE =====
+(function() {
+  const screen = document.getElementById('introScreen');
+  document.getElementById('page1').style.display = 'none';
+
+  const slides = [
+    { id: 'intro1', mode: 'tap' }, { id: 'intro2', mode: 'tap' },
+    { id: 'intro3', mode: 'tap' }, { id: 'intro4', mode: 'tap' },
+    { id: 'intro5', mode: 'tap' }, { id: 'intro6', mode: 'auto', dur: 900 },
+    { id: 'intro7', mode: 'auto', dur: 900 }, { id: 'intro8', mode: 'auto', dur: 800 }
+  ];
+
+  let idx = 0, state = 'waiting', tapEnabled = false, busy = false;
+  const hint = document.createElement('div');
+  hint.style.cssText = `position:absolute; bottom:2.5rem; left:50%; transform:translateX(-50%); font-family:'Crimson Pro',serif; font-size:1rem; color:rgba(255,255,255,0.4); letter-spacing:0.15em; text-transform:uppercase; pointer-events:none; transition:opacity 0.4s;`;
+  hint.textContent = 'tap to reveal';
+  screen.appendChild(hint);
+
+  function setHint(text, pulse) {
+    hint.textContent = text;
+    hint.style.animation = pulse ? 'hintPulse 1.5s infinite' : 'none';
+  }
+  function hideHint() { hint.style.opacity = '0'; hint.style.animation = 'none'; }
+  function finishIntro() {
+    hideHint();
+    screen.style.animation = 'introExit 0.7s ease forwards';
+    setTimeout(() => {
+      screen.style.display = 'none';
+      document.getElementById('page1').style.display = 'flex';
+    }, 700);
+  }
+  function showSlide(i) {
+    if (i >= slides.length) { finishIntro(); return; }
+    idx = i;
+    const slide = slides[i];
+    if (slide.mode === 'tap') { state = 'waiting'; setHint('tap to reveal', true); }
+    else { runAutoSlide(i); }
+  }
+  function runAutoSlide(i) {
+    hideHint(); busy = true;
+    const slide = slides[i];
+    const el = document.getElementById(slide.id);
+    el.style.animation = `countPop ${slide.dur + 200}ms cubic-bezier(0.34,1.56,0.64,1) forwards`;
+    setTimeout(() => {
+      el.style.animation = 'introFadeOut 300ms ease forwards';
+      setTimeout(() => { el.style.opacity = '0'; el.style.animation = ''; busy = false; showSlide(i + 1); }, 300);
+    }, slide.dur);
+  }
+  function onTap() {
+    if (!tapEnabled || busy) return;
+    const slide = slides[idx];
+    if (!slide || slide.mode !== 'tap') return;
+    if (state === 'waiting') {
+      busy = true;
+      const el = document.getElementById(slide.id);
+      el.style.animation = 'introReveal 0.6s ease forwards';
+      setTimeout(() => { el.style.animation = 'none'; el.style.opacity = '1'; state = 'shown'; busy = false; setHint('tap to continue', true); }, 600);
+    } else if (state === 'shown') {
+      busy = true;
+      const el = document.getElementById(slide.id);
+      el.style.animation = 'introFadeOut 250ms ease forwards';
+      setTimeout(() => { el.style.opacity = '0'; el.style.animation = ''; busy = false; showSlide(idx + 1); }, 250);
+    }
+  }
+  setTimeout(() => { tapEnabled = true; screen.addEventListener('click', onTap); screen.addEventListener('touchend', (e) => { e.preventDefault(); onTap(); }, { passive: false }); }, 400);
+  setTimeout(() => showSlide(0), 300);
+})();
+
+// ===== PARTICLES =====
+const canvas = document.getElementById('particles');
+const ctx = canvas.getContext('2d');
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+window.addEventListener('resize', () => { canvas.width = window.innerWidth; canvas.height = window.innerHeight; });
+const heartColors = ['#ff2244', '#22c55e', '#ff4466', '#16a34a', '#ef4444', '#15803d'];
+const hearts = Array.from({length: 30}, () => ({
+  x: Math.random() * canvas.width, y: Math.random() * canvas.height,
+  size: Math.random() * 14 + 6, speed: Math.random() * 0.5 + 0.2,
+  opacity: Math.random() * 0.35 + 0.15, drift: (Math.random() - 0.5) * 0.5,
+  color: heartColors[Math.floor(Math.random() * heartColors.length)]
+}));
+function drawHeart(x, y, size, opacity, color) {
+  ctx.save(); ctx.globalAlpha = opacity; ctx.fillStyle = color;
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.bezierCurveTo(x, y - size/2, x - size, y - size/2, x - size, y);
+  ctx.bezierCurveTo(x - size, y + size/2, x, y + size * 0.75, x, y + size);
+  ctx.bezierCurveTo(x, y + size * 0.75, x + size, y + size/2, x + size, y);
+  ctx.bezierCurveTo(x + size, y - size/2, x, y - size/2, x, y);
+  ctx.fill(); ctx.restore();
+}
+function animateParticles() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  hearts.forEach(h => { drawHeart(h.x, h.y, h.size, h.opacity, h.color); h.y -= h.speed; h.x += h.drift; if (h.y < -30) { h.y = canvas.height + 30; h.x = Math.random() * canvas.width; } });
+  requestAnimationFrame(animateParticles);
+}
+animateParticles();
+
+// ===== PAGE 1: ANSWER CHECK (FIXED - AUTO CLOSES) =====
+let pageTransitionInProgress = false;
+
+function checkAnswer(btn, answer) {
+  if (pageTransitionInProgress) return;
+  
+  if (answer === 'Piggy') {
+    btn.classList.add('correct');
+    btn.textContent = '✓ Piggy 🐷';
+    showPigHappyAndTransition();
+  } else {
+    btn.classList.add('wrong');
+    showPigSad();
+    setTimeout(() => btn.classList.remove('wrong'), 600);
+  }
+}
+
+function showPigHappyAndTransition() {
+  pageTransitionInProgress = true;
+  const overlay = document.getElementById('pigOverlay');
+  const happyPig = document.getElementById('pigHappy');
+  const sadPig = document.getElementById('pigSad');
+  const pigBtn = document.getElementById('pigBtn');
+  
+  overlay.style.display = 'flex';
+  happyPig.style.display = 'block';
+  sadPig.style.display = 'none';
+  pigBtn.style.display = 'none';
+  
+  document.getElementById('pigMsg').textContent = 'Yay! That\'s right! 🎉';
+  document.getElementById('pigMsg').style.color = '#4ade80';
+  document.getElementById('pigSub').textContent = 'Welcome in, my Piggy 🐷💕';
+  
+  setTimeout(() => {
+    happyPig.classList.add('bouncing');
+  }, 500);
+  
+  // CRITICAL FIX: Auto-close after 2 seconds and go to Page 2
+  setTimeout(() => {
+    overlay.style.display = 'none';
+    happyPig.classList.remove('bouncing');
+    happyPig.style.display = 'none';
+    enterPage2();
+  }, 2200);
+}
+
+function showPigSad() {
+  const overlay = document.getElementById('pigOverlay');
+  const happyPig = document.getElementById('pigHappy');
+  const sadPig = document.getElementById('pigSad');
+  const pigBtn = document.getElementById('pigBtn');
+  
+  overlay.style.display = 'flex';
+  sadPig.style.display = 'block';
+  happyPig.style.display = 'none';
+  pigBtn.style.display = 'inline-block';
+  
+  document.getElementById('pigMsg').textContent = 'Aww... That\'s wrong baby~';
+  document.getElementById('pigMsg').style.color = '#f87171';
+  document.getElementById('pigSub').textContent = 'You are wrong baby 🥺 Try again!';
+  
+  setTimeout(() => {
+    sadPig.classList.add('shaking');
+  }, 500);
+}
+
+function closePigOverlay() {
+  const overlay = document.getElementById('pigOverlay');
+  const sadPig = document.getElementById('pigSad');
+  const happyPig = document.getElementById('pigHappy');
+  sadPig.classList.remove('shaking');
+  happyPig.classList.remove('bouncing');
+  sadPig.style.display = 'none';
+  happyPig.style.display = 'none';
+  overlay.style.display = 'none';
+  pageTransitionInProgress = false;
+}
+
+function enterPage2() {
+  const p1 = document.getElementById('page1');
+  p1.style.animation = 'p1Exit 0.6s ease forwards';
+  setTimeout(() => {
+    p1.style.display = 'none';
+    const p2 = document.getElementById('page2');
+    p2.style.display = 'block';
+    p2.style.animation = 'p2Enter 0.8s ease forwards';
+    initPage2();
+    pageTransitionInProgress = false;
+  }, 600);
+}
+
+function initPage2() {
+  setTimeout(() => {
+    document.getElementById('musicBar').classList.add('show');
+    playMusic();
+  }, 1200);
+  
+  // FORCE PHOTO GALLERY TO BE VISIBLE (FIX)
+  setTimeout(() => {
+    const pgHeader = document.getElementById('pgHeader');
+    const pgCards = document.querySelectorAll('.pg-card');
+    const balloons = document.getElementById('balloonsRow');
+    const wishCard = document.getElementById('bdayWishCard');
+    
+    if (pgHeader) pgHeader.classList.add('visible');
+    pgCards.forEach(card => card.classList.add('visible'));
+    if (balloons) balloons.classList.add('visible');
+    if (wishCard) wishCard.classList.add('visible');
+  }, 500);
+  
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  
+  // Observe all sections
+  ['letterCard', 'giftTitle', 'giftSub', 'giftWrap',
+   'pgHeader', 'pgCard1', 'pgCard2', 'pgCard3', 'pgCard4',
+   'balloonsRow', 'bdayWishCard'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+}
+
+// ===== MUSIC =====
+let musicPlaying = false;
+const audio = document.getElementById('bgMusic');
+function playMusic() { audio.volume = 0.4; audio.play().then(() => { musicPlaying = true; }).catch(() => {}); }
+function toggleMusic() {
+  if (musicPlaying) { audio.pause(); musicPlaying = false; document.getElementById('musicNote').textContent = '🔇'; document.getElementById('musicLabel').textContent = 'Music paused'; }
+  else { audio.play(); musicPlaying = true; document.getElementById('musicNote').textContent = '🎵'; document.getElementById('musicLabel').textContent = '♪ Playing for you'; }
+}
+
+// ===== GIFT BOX =====
+function openGiftModal() {
+  if (document.getElementById('celebrationSection').classList.contains('show')) return;
+  document.getElementById('giftModal').classList.add('show');
+}
+
+function openPresent() {
+  const lid = document.getElementById('giftLid'); 
+  lid.style.animation = 'lidFly 0.6s ease forwards';
+  const box = document.getElementById('giftBox'); 
+  box.style.animation = 'shake 0.5s ease 0.3s';
+  setTimeout(() => {
+    const cel = document.getElementById('celebrationSection'); 
+    cel.classList.add('show'); 
+    cel.style.animation = 'fadeInUp 0.8s ease forwards';
+    setTimeout(() => { 
+      document.getElementById('videoReveal').classList.add('show'); 
+    }, 400);
+    startConfetti(); 
+    cel.scrollIntoView({ behavior: 'smooth' });
+  }, 700);
+}
+
+function startConfetti() {
+  const c = document.getElementById('confettiCanvas');
+  c.width = window.innerWidth; 
+  c.height = window.innerHeight;
+  const cx = c.getContext('2d');
+  const pieces = Array.from({length: 120}, () => ({
+    x: Math.random() * c.width, y: -20, w: Math.random() * 10 + 5, h: Math.random() * 6 + 3,
+    color: ['#f472b6','#fda4af','#fbcfe8','#f59e0b','#fff','#a78bfa'][Math.floor(Math.random()*6)],
+    speed: Math.random() * 4 + 2, spin: Math.random() * 6 - 3, angle: 0, drift: Math.random() * 2 - 1
+  }));
+  let frame = 0;
+  function drop() {
+    if (frame > 180) { cx.clearRect(0,0,c.width,c.height); return; }
+    cx.clearRect(0,0,c.width,c.height);
+    pieces.forEach(p => {
+      cx.save(); cx.translate(p.x, p.y); cx.rotate(p.angle * Math.PI/180);
+      cx.fillStyle = p.color; cx.fillRect(-p.w/2, -p.h/2, p.w, p.h); cx.restore();
+      p.y += p.speed; p.x += p.drift; p.angle += p.spin;
+    });
+    frame++; requestAnimationFrame(drop);
+  }
+  drop();
+  setTimeout(() => { frame = 0; drop(); }, 2000);
+  setTimeout(() => { frame = 0; drop(); }, 4000);
+}
+
+// ONLY ONE checkGiftAnswer function - THIS IS THE CORRECT ONE
+function checkGiftAnswer(btn, answer) {
+  if (answer === 'your my wife') {
+    document.getElementById('giftModal').classList.remove('show');
+    startConfetti();
+    
+    // Save music state before navigating
+    const audio = document.getElementById('bgMusic');
+    localStorage.setItem('musicTime', audio.currentTime);
+    localStorage.setItem('musicPlaying', !audio.paused);
+    
+    setTimeout(() => {
+      window.location.href = 'pavi2.html';
+    }, 800);
+    
+  } else {
+    btn.style.borderColor = '#ef4444'; 
+    btn.style.color = '#ef4444'; 
+    btn.textContent = '✗ ' + btn.textContent;
+    setTimeout(() => { 
+      btn.style.borderColor = ''; 
+      btn.style.color = ''; 
+      btn.textContent = answer; 
+    }, 800);
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Our Memories | Video Gallery 🎬💕</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Crimson+Pro:ital,wght@0,300;0,400;1,300&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --pink: #f472b6;
+      --deep-pink: #db2777;
+      --rose: #fda4af;
+    }
+
+    body {
+      font-family: 'Crimson Pro', serif;
+      background: #0d0008;
+      color: #fff;
+      overflow-x: hidden;
+      min-height: 100vh;
+    }
+
+    #particles {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .page3-container {
+      position: relative;
+      z-index: 2;
+      padding: 2rem 1.5rem 4rem;
+      min-height: 100vh;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .gallery-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      opacity: 0;
+      animation: fadeInUp 0.8s 0.2s forwards;
+    }
+
+    .gallery-header h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 4rem);
+      background: linear-gradient(135deg, #fff, var(--pink), #ffb347);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .gallery-header p {
+      font-size: 1.2rem;
+      color: rgba(255,255,255,0.7);
+      font-style: italic;
+    }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      margin: 2rem 0;
+    }
+
+    .video-card {
+      background: rgba(10, 5, 15, 0.65);
+      backdrop-filter: blur(10px);
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(244,114,182,0.4);
+      transition: all 0.4s ease;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: cardReveal 0.6s ease forwards;
+    }
+
+    .video-card:nth-child(1) { animation-delay: 0.1s; }
+    .video-card:nth-child(2) { animation-delay: 0.2s; }
+    .video-card:nth-child(3) { animation-delay: 0.3s; }
+    .video-card:nth-child(4) { animation-delay: 0.4s; }
+
+    .video-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--pink);
+      box-shadow: 0 20px 35px rgba(244,114,182,0.3);
+    }
+
+    .video-wrapper {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      background: #0a0510;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+
+    .video-wrapper iframe {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    .video-caption {
+      padding: 1rem;
+      text-align: center;
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      font-size: 1rem;
+      color: var(--rose);
+      border-top: 1px solid rgba(244,114,182,0.3);
+      background: rgba(0,0,0,0.3);
+    }
+
+    .back-home {
+      text-align: center;
+      margin-top: 3rem;
+    }
+
+    .back-home button {
+      background: linear-gradient(120deg, var(--pink), var(--deep-pink));
+      border: none;
+      padding: 12px 32px;
+      border-radius: 60px;
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-family: 'Crimson Pro', serif;
+      box-shadow: 0 4px 15px rgba(244,114,182,0.4);
+    }
+
+    .back-home button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 8px 25px rgba(244,114,182,0.7);
+    }
+
+    .music-bar {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      background: rgba(0,0,0,0.7);
+      border: 1px solid rgba(244,114,182,0.5);
+      border-radius: 60px;
+      padding: 8px 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      z-index: 200;
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .music-bar:hover {
+      border-color: var(--pink);
+      transform: scale(1.05);
+    }
+
+    .music-note {
+      animation: spin 2s linear infinite;
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes cardReveal {
+      from { opacity: 0; transform: translateY(40px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @media (max-width: 768px) {
+      .video-grid {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+      }
+      .page3-container {
+        padding: 1.5rem 1rem 3rem;
+      }
+      .gallery-header h1 {
+        font-size: 1.8rem;
+      }
+    }
+    .video-thumbnail {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: #0a0510;
+  cursor: pointer;
+}
+
+.video-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.video-card:hover .video-thumbnail img {
+  transform: scale(1.05);
+}
+
+.play-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60px;
+  height: 60px;
+  background: rgba(244,114,182,0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(244,114,182,0.5);
+}
+
+.play-button::after {
+  content: '▶';
+  color: white;
+  font-size: 24px;
+  margin-left: 4px;
+}
+
+.video-card:hover .play-button {
+  transform: translate(-50%, -50%) scale(1.1);
+  background: var(--pink);
+}
+  </style>
+</head>
+<body>
+
+  <canvas id="particles"></canvas>
+
+  <div class="page3-container">
+    <div class="gallery-header">
+      <h1>🎬 Our Precious Memories 🎬</h1>
+      <p>4 special videos made just for you, my Piggy 💖</p>
+    </div>
+
+    <div class="video-grid">
+  <!-- Video 1 -->
+  <div class="video-card" onclick="playVideoAndPauseMusic('https://www.youtube.com/watch?v=ZYA4K2mzUwQ', '_blank')">
+    <div class="video-thumbnail">
+      <img src="https://img.youtube.com/vi/ZYA4K2mzUwQ/maxresdefault.jpg" alt="Our First Memory">
+      <div class="play-button"></div>
+    </div>
+    <div class="video-caption">✨ Happy birthday piggy amu baby ma ✨</div>
+  </div>
+
+  <!-- Video 2 -->
+  <div class="video-card" onclick="playVideoAndPauseMusic('https://www.youtube.com/watch?v=2WcCu9NY4Dc', '_blank')">
+    <div class="video-thumbnail">
+      <img src="https://img.youtube.com/vi/2WcCu9NY4Dc/maxresdefault.jpg" alt="Laughter & Love">
+      <div class="play-button"></div>
+    </div>
+    <div class="video-caption">💞 song for you piggy 💞</div>
+  </div>
+
+  <!-- Video 3 -->
+  <div class="video-card" onclick="playVideoAndPauseMusic('https://www.youtube.com/watch?v=-_3eQfKSBdA', '_blank')">
+    <div class="video-thumbnail">
+      <img src="https://img.youtube.com/vi/-_3eQfKSBdA/maxresdefault.jpg" alt="Moments Together">
+      <div class="play-button"></div>
+    </div>
+    <div class="video-caption">🌹 song for you piggy🌹</div>
+  </div>
+
+  <!-- Video 4 -->
+  <div class="video-card" onclick="playVideoAndPauseMusic('https://www.youtube.com/watch?v=vS1GdQvZnpU', '_blank')">
+    <div class="video-thumbnail">
+      <img src="https://img.youtube.com/vi/vS1GdQvZnpU/maxresdefault.jpg" alt="Forever Us">
+      <div class="play-button"></div>
+    </div>
+    <div class="video-caption">💫 song for you piggy💫</div>
+  </div>
+</div>
+
+    <div class="back-home">
+      <button onclick="goBackToStart()">🎀 Back to Start 🎀</button>
+    </div>
+  </div>
+
+  <div class="music-bar" onclick="toggleMusic()">
+    <span class="music-note" id="musicNoteIcon">🎵</span>
+    <span id="musicLabel">♪ For you, Piggy</span>
+  </div>
+
+  <audio id="bgMusic" loop>
+    <source src="Maryan - Innum Konjam Naeram Video  A. R. Rahman  Dhanush  Super Hit Song - SonyMusicSouthVEVO.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    // Floating Hearts
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    const heartColors = ['#ff3366', '#ff6699', '#ff99cc', '#ff4d6d', '#e84393', '#f472b6'];
+    const hearts = [];
+    
+    for (let i = 0; i < 45; i++) {
+      hearts.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        size: Math.random() * 12 + 6,
+        speed: Math.random() * 0.6 + 0.2,
+        opacity: Math.random() * 0.4 + 0.15,
+        drift: (Math.random() - 0.5) * 0.6,
+        color: heartColors[Math.floor(Math.random() * heartColors.length)]
+      });
+    }
+
+    function drawHeart(x, y, size, opacity, color) {
+      ctx.save();
+      ctx.globalAlpha = opacity;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.moveTo(x, y);
+      ctx.bezierCurveTo(x, y - size/2, x - size, y - size/2, x - size, y);
+      ctx.bezierCurveTo(x - size, y + size/2, x, y + size * 0.7, x, y + size);
+      ctx.bezierCurveTo(x, y + size * 0.7, x + size, y + size/2, x + size, y);
+      ctx.bezierCurveTo(x + size, y - size/2, x, y - size/2, x, y);
+      ctx.fill();
+      ctx.restore();
+    }
+
+    function animateHearts() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hearts.forEach(h => {
+        drawHeart(h.x, h.y, h.size, h.opacity, h.color);
+        h.y -= h.speed;
+        h.x += h.drift;
+        if (h.y < -40) {
+          h.y = canvas.height + 30;
+          h.x = Math.random() * canvas.width;
+        }
+        if (h.x < -50) h.x = canvas.width + 30;
+        if (h.x > canvas.width + 50) h.x = -30;
+      });
+      requestAnimationFrame(animateHearts);
+    }
+    animateHearts();
+
+    // Music
+    let musicPlaying = false;
+    const audio = document.getElementById('bgMusic');
+    const musicNoteIcon = document.getElementById('musicNoteIcon');
+    const musicLabel = document.getElementById('musicLabel');
+    
+    const savedTime = localStorage.getItem('musicTime');
+    const wasPlaying = localStorage.getItem('musicPlaying');
+    
+    if (savedTime) {
+      audio.currentTime = parseFloat(savedTime);
+    }
+    
+    function playMusic() {
+      audio.volume = 0.3;
+      audio.play().then(() => {
+        musicPlaying = true;
+        if (musicNoteIcon) musicNoteIcon.innerHTML = '🎵';
+        if (musicLabel) musicLabel.innerHTML = '♪ Playing for you';
+      }).catch(() => {});
+    }
+    
+    if (wasPlaying === 'true') {
+      playMusic();
+    }
+    
+    function toggleMusic() {
+      if (musicPlaying) {
+        audio.pause();
+        musicPlaying = false;
+        if (musicNoteIcon) musicNoteIcon.innerHTML = '🔇';
+        if (musicLabel) musicLabel.innerHTML = 'Music paused';
+      } else {
+        audio.play();
+        musicPlaying = true;
+        if (musicNoteIcon) musicNoteIcon.innerHTML = '🎵';
+        if (musicLabel) musicLabel.innerHTML = '♪ Playing for you';
+      }
+    }
+    
+    window.addEventListener('beforeunload', function() {
+      localStorage.setItem('musicTime', audio.currentTime);
+      localStorage.setItem('musicPlaying', musicPlaying);
+    });
+    
+    function startConfetti() {
+      const confettiCanvas = document.createElement('canvas');
+      confettiCanvas.style.position = 'fixed';
+      confettiCanvas.style.top = '0';
+      confettiCanvas.style.left = '0';
+      confettiCanvas.style.width = '100%';
+      confettiCanvas.style.height = '100%';
+      confettiCanvas.style.pointerEvents = 'none';
+      confettiCanvas.style.zIndex = '9999';
+      document.body.appendChild(confettiCanvas);
+      confettiCanvas.width = window.innerWidth;
+      confettiCanvas.height = window.innerHeight;
+      const cx = confettiCanvas.getContext('2d');
+      
+      const particles = [];
+      for (let i = 0; i < 150; i++) {
+        particles.push({
+          x: Math.random() * confettiCanvas.width,
+          y: -20,
+          w: Math.random() * 10 + 4,
+          h: Math.random() * 7 + 3,
+          color: ['#f472b6', '#fda4af', '#fbbf24', '#fff', '#a78bfa', '#4ade80'][Math.floor(Math.random() * 6)],
+          speed: Math.random() * 5 + 2,
+          spin: (Math.random() - 0.5) * 9,
+          angle: 0,
+          drift: (Math.random() - 0.5) * 1.5
+        });
+      }
+      
+      let frame = 0;
+      function drop() {
+        if (frame > 160) {
+          cx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+          confettiCanvas.remove();
+          return;
+        }
+        cx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        particles.forEach(p => {
+          cx.save();
+          cx.translate(p.x, p.y);
+          cx.rotate(p.angle * Math.PI / 180);
+          cx.fillStyle = p.color;
+          cx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          cx.restore();
+          p.y += p.speed;
+          p.x += p.drift;
+          p.angle += p.spin;
+        });
+        frame++;
+        requestAnimationFrame(drop);
+      }
+      drop();
+    }
+
+    function goBackToStart() {
+  // Save current music state
+  const audio = document.getElementById('bgMusic');
+  localStorage.setItem('musicTime', audio.currentTime);
+  localStorage.setItem('musicPlaying', musicPlaying);
+  
+  window.location.href = 'pavi.html';
+}
+    // Play video and pause background music
+function playVideoAndPauseMusic(videoUrl) {
+  // Pause the background music
+  const audio = document.getElementById('bgMusic');
+  if (audio && !audio.paused) {
+    audio.pause();
+    musicPlaying = false;
+    const musicNoteIcon = document.getElementById('musicNoteIcon');
+    const musicLabel = document.getElementById('musicLabel');
+    if (musicNoteIcon) musicNoteIcon.innerHTML = '🔇';
+    if (musicLabel) musicLabel.innerHTML = 'Music paused';
+  }
+  
+  // Open video in new tab
+  window.open(videoUrl, '_blank');
+}
+
+    setTimeout(() => startConfetti(), 500);
+    setTimeout(() => startConfetti(), 2000);
+  </script>
+</body>
+</html>
